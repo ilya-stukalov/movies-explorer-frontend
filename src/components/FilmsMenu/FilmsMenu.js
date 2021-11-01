@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import AccountLogo from '../../images/account.svg';
 import { NavLink } from 'react-router-dom';
 
@@ -34,6 +33,7 @@ function FilmsMenu({onClose}) {
             to="/profile"
             className="films-menu__link">
             <img
+              alt="Иконка аккаунта"
               className="films-menu__item-logo"
               src={AccountLogo}/>
             Аккаунт

@@ -16,6 +16,7 @@ function Popup( {isOpen, onClose} ) {
           Главная
         </h2>
         <img
+          alt="Иконка закрытия"
           className="popup__close-icon"
           src={CloseIcon}
           onClick={onClose}

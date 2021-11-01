@@ -37,6 +37,7 @@ function MoviesCard( {movie, isSavedMovies} ) {
         }
       </div>
       <img
+        alt="Фото фильма"
         src={movie.link}
         className="movies-card__photo"
       />

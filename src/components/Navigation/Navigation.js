@@ -1,7 +1,7 @@
 import React from 'react';
 import FilmsMenu from '../FilmsMenu/FilmsMenu';
 import UsersMenu from '../UsersMenu/UsersMenu'
-import {Route, Switch} from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import MenuLabel from '../../images/menu-label.svg';
 import Popup from '../Popup/Popup';
 
@@ -24,6 +24,7 @@ function Navigation({width}) {
         (<>
           <Route exact path={['/movies', '/saved-movies', '/profile']}>
             <img
+              alt="Иконка меню"
               className="navigation__menu-label"
               src={MenuLabel}
               onClick={handleMenuClick}

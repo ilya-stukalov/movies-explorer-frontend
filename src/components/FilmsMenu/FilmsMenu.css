@@ -41,7 +41,6 @@
 .films-menu__link {
   color: #000000;
   text-decoration: none;
-
 }
 
 .films-menu__link:visited {
@@ -172,6 +171,5 @@
 
   .films-menu__active {
     border-bottom: 2px solid;
-    /*text-decoration: underline;*/
   }
 }

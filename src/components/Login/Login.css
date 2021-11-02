@@ -1,0 +1,63 @@
+.signin {
+
+}
+
+.signin__container {
+  display: flex;
+  flex-direction: column;
+  width: 396px;
+  padding-top: 70px;
+  margin: 0 auto 40px;
+}
+
+.signin__header {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 29px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin: 0;
+  margin: 40px 0;
+}
+
+.signin__text {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #A0A0A0;
+}
+
+.signin__link {
+  color: #3456F3;
+  text-decoration: none;
+}
+
+@media screen and (min-width: 501px) and (max-width: 768px) {
+  .signin__container {
+    padding-top: 232px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .signin__container {
+    width: 81.25%;
+  }
+
+  .signin__logo {
+    align-self: center;
+  }
+
+  .signin__header {
+    align-self: center;
+  }
+
+  .signin__text {
+    font-size: 12px;
+    line-height: 15px;}
+}

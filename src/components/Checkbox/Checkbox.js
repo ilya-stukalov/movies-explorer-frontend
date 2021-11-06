@@ -1,11 +1,9 @@
 import React from 'react';
 
-function Checkbox() {
-  const [isChecked, setIsChecked] = React.useState(true);
+function Checkbox({isChecked, handlerCheckBox}) {
 
-  const handlerCheckBox = () => {
-    setIsChecked(!isChecked);
-  };
+
+
 
   return (
       <label className="checkbox__label">

@@ -11,14 +11,16 @@ function Footer() {
                 <a
                   className="footer__link"
                   href="https://practicum.yandex.ru/"
-                  target="_blank">
+                  target="_blank"
+                  rel="noreferrer">
                 Яндекс.Практикум</a>
               </li>
               <li className="footer__list-item">
                 <a
                   className="footer__link"
                   href="https://github.com/ilya-stukalov"
-                  target="_blank">
+                  target="_blank"
+                  rel="noreferrer">
                 Github
                 </a>
               </li>
@@ -26,7 +28,8 @@ function Footer() {
                 <a
                   className="footer__link"
                   href="https://facebook.com"
-                  target="_blank">
+                  target="_blank"
+                  rel="noreferrer">
                   Facebook
                 </a>
               </li>

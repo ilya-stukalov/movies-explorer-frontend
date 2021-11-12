@@ -19,7 +19,7 @@ function Movies({ width, filteredMovies, receivedSavedMovies, handleSearchFilms,
       {/*или Main?*/}
       <SearchForm
         handleSearchFilms={handleSearchFilms}/>
-      {isLoading ?  '' : <Preloader/>}
+      {isLoading ?  <Preloader/> : ''}
 
       <MoviesCardList
         width={width}

@@ -40,7 +40,7 @@ function App() {
     }
   })
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (loggedIn) {
       setIsLoading(true);
       mainApi.getSavedFilms()
@@ -244,6 +244,7 @@ function App() {
 
   function signOut() {
     setLoggedIn(false);
+    setReceivedSavedMovies([]);
     mainApi.deleteCookies();
     localStorage.removeItem('user');
     history.push('/');

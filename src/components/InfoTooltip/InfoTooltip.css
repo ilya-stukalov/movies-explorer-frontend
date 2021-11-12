@@ -82,27 +82,20 @@
   background-color: transparent;
 }
 
-
-
-@media screen and (min-width: 779px) {
-  .tooltip__close-icon {
-    position: absolute;
-    top: -40px;
-    right: -40px;
-  }
-}
-@media screen and (max-width: 779px) {
-  .tooltip__close-icon {
-    margin-bottom: 13.65px;
-    width: 26px;
-    height: 26px;
-  }
-}
-
-
 .tooltip__close-icon:hover {
   opacity: 0.6;
   transition: 2s;
   cursor: pointer;
 }
 
+
+@media screen and (max-width: 500px) {
+  .tooltip__container_info {
+    background-color: white;
+    width: 320px;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -27,6 +27,7 @@ export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     credentials: 'include',
+    mode: 'cors',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'

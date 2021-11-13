@@ -357,14 +357,14 @@ function App() {
         />
 
         <Route
-          path="/signin"
+          exact path="/signin"
         >
           <Login
             handleLogin={handleLogin}/>
         </Route>
 
         <Route
-          path="/signup"
+          exact path="/signup"
         >
           <Register
             handleRegistration={handleRegistration}/>

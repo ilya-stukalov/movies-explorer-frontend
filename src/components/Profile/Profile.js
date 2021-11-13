@@ -9,19 +9,24 @@ function Profile({updateUserInfo, signOut}) {
     forceValidityUpdate,
     values,
     errors,
-    isValid
+    isValid,
+    resetForm,
   } = useFormValidation({});
 
   const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
-    values.name = currentUser.name;
-    values.email = currentUser.email;
-  }, [currentUser]);
+    if (currentUser) {
+      resetForm(currentUser);
+    }
+    forceValidityUpdate();
+  }, [currentUser, resetForm]);
 
   function handleSubmit(e) {
     e.preventDefault();
     updateUserInfo(values);
+    forceValidityUpdate();
+    resetForm();
     forceValidityUpdate();
   }
 

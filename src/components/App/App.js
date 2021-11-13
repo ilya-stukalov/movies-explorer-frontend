@@ -260,6 +260,7 @@ function App() {
   function signOut() {
     setLoggedIn(false);
     setReceivedSavedMovies([]);
+    setReceivedMovies([]);
     mainApi.deleteCookies();
     localStorage.removeItem('user');
     history.push('/');

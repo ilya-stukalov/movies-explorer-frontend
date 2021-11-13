@@ -4,7 +4,7 @@ import Logo from '../Logo/Logo';
 import {Link} from 'react-router-dom';
 import { useFormValidation } from '../../hooks/useFormValidation';
 
-function Login({handleLogin}) {
+function Login({ handleLogin }) {
 
   const {
     handleChange,
@@ -42,8 +42,9 @@ function Login({handleLogin}) {
             name="email"
             onChange={handleChange}
             className="form__input"
-            value={values.email || ''}/>
-          <span className="form__item-error form__item-error_active">{errors.email}</span>
+            value={values.email || ''}
+            pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"/>
+          <span className="form__item-error form__item-error_active">{ errors.email }</span>
           <span
             className="form__field-name">
             Пароль

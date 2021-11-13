@@ -9,11 +9,10 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import NotFound from '../NotFound/NotFound';
 import * as mainApi from '../../utils/MainApi.js';
 import * as moviesApi from '../../utils/MoviesApi.js';
-import { useHistory } from 'react-router-dom';
 import ProtectedRoute from '../../utils/ProtectedRoute.js';
 import { useEffect } from 'react';
 import  InfoTooltip from '../InfoTooltip/InfoTooltip';
@@ -21,8 +20,10 @@ import { findError } from '../../utils/utils';
 
 function App() {
   const history = useHistory();
+  const location = useLocation();
   const [currentUser, setCurrentUser] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
+  const [receivedMovies, setReceivedMovies] = React.useState([]);
   const [receivedSavedMovies, setReceivedSavedMovies] = React.useState([]);
   const [width, setWidth] = React.useState(window.innerWidth);
   const [filteredMovies, setFilteredMovies] = React.useState([]);
@@ -48,7 +49,7 @@ function App() {
           values.data.forEach((movie) => {
             if (movie.owner === currentUser._id) {
               setReceivedSavedMovies(prevState => (
-                [ ...prevState, movie ]
+                [...prevState, movie]
               ));
             }
           });
@@ -61,7 +62,6 @@ function App() {
         .finally(() => {
           setIsLoading(false)
         })
-
     }
   }, [loggedIn]);
 
@@ -139,17 +139,21 @@ function App() {
 
   async function handleGetExternalFilms() {
     setIsLoading(true);
+    if (receivedMovies.length === 0) {
       return moviesApi.getFilms()
         .then((data) => {
+          setReceivedMovies(data);
           return data;
         })
-        .catch(() => {
-          setSearchResultMessage('Во время запроса произошла ошибка. ' +
-        'Возможно, проблема с соединением или сервер недоступен. ' +
-        'Подождите немного и попробуйте ещё раз')
+        .catch((err) => {
+          setErrorMessage(findError(err));
+          handleInfoTooltip(false);
+          console.log(err);
         })
-        .finally(() => {
-          setIsLoading(false)})
+    }
+    else {
+      return receivedMovies;
+    }
   }
 
   function handleSearchSavedFilms(checked, key) {
@@ -176,35 +180,45 @@ function App() {
   async function handleSearchFilms(checked, key) {
     setSearchResultMessage('');
     setFilteredMovies([]);
-    let movies;
     if (key) {
-      await handleGetExternalFilms()
-        .then((res) => {
-          movies = res.filter((movie) => JSON.stringify(movie).toLowerCase().includes(key.toLowerCase()));
-          if (movies.length === 0) {
-            setSearchResultMessage('Ничего не найдено');
-          }
-          else {
-            if (checked) {
-              movies = movies.filter(movie => movie.duration <= 40);
-              if (movies.length === 0) {
-                setSearchResultMessage('Ничего не найдено');
-              }
-              else setFilteredMovies(movies);
+      let movies = await handleGetExternalFilms();
+      if (movies) {
+        movies = movies.filter((movie) => JSON.stringify(movie).toLowerCase().includes(key.toLowerCase()));
+        if (movies.length === 0) {
+          setIsLoading(false);
+          setSearchResultMessage('Ничего не найдено');
+        } else {
+          if (checked) {
+            movies = movies.filter(movie => movie.duration <= 40);
+            if (movies.length === 0) {
+              setIsLoading(false);
+              setSearchResultMessage('Ничего не найдено');
+            } else {
+              console.log(movies);
+              setIsLoading(false);
+              setFilteredMovies(movies);
             }
-            else setFilteredMovies(movies);
+          } else {
+            setIsLoading(false);
+            setFilteredMovies(movies);
           }
-        });
+        }
+      } else {
+        setIsLoading(false);
+        setSearchResultMessage('Во время запроса произошла ошибка. ' +
+          'Возможно, проблема с соединением или сервер недоступен. ' +
+          'Подождите немного и попробуйте ещё раз');
+      }
+    } else {
+      setIsLoading(false);
+      setSearchResultMessage('Введите слово для поиска');
     }
-    else setSearchResultMessage('Введите слово для поиска');
   }
-
-
 
   function handleRegistration(values) {
     mainApi.register(values)
       .then(() => {
-        history.push('/signin');
+        handleLogin(values);
         handleInfoTooltip(true);
       })
       .catch((err) => {
@@ -229,13 +243,14 @@ function App() {
   }
 
   function tokenCheck() {
+    const path = location.pathname;
     mainApi.getContent()
       .then((res) => {
         localStorage.setItem('user', JSON.stringify(res));
         const user = JSON.parse(localStorage.getItem('user'));
         setCurrentUser(user);
         setLoggedIn(true);
-        history.push('/movies');
+        path === '/signin' ||  path === '/signup' ? history.push('/movies') : history.push(path);
       })
       .catch((err) => {
         console.log(findError(err));
@@ -289,23 +304,17 @@ function App() {
 
       <Route exact path={['/', '/movies', '/saved-movies', '/profile']}>
         <Header
+          loggedIn={loggedIn}
           width={width}
         />
       </Route>
 
       <Switch>
-        <Route
-          exact path="/signin"
-        >
-          <Login
-            handleLogin={handleLogin}/>
-        </Route>
 
         <Route
-          exact path="/signup"
+          exact path="/"
         >
-          <Register
-            handleRegistration={handleRegistration}/>
+          <Main />
         </Route>
 
         <ProtectedRoute
@@ -347,18 +356,27 @@ function App() {
         />
 
         <Route
-          exact path="/"
+          path="/signin"
         >
-          <Main />
+          <Login
+            handleLogin={handleLogin}/>
         </Route>
 
-        <Route path="*">
-          <NotFound />
+        <Route
+          path="/signup"
+        >
+          <Register
+            handleRegistration={handleRegistration}/>
         </Route>
-        <Route exact path={['/', '/movies', '/saved-movies']}>
-          <Footer />
-        </Route>
+
+        <Route component={NotFound} />
+
       </Switch>
+
+      <Route exact path={['/', '/movies', '/saved-movies']}>
+        <Footer />
+      </Route>
+
       <InfoTooltip
         errorMessage={errorMessage}
         onClose={closeAllPopups}

@@ -12,6 +12,7 @@ export function useFormValidation() {
     const target = e.target;
     const name = target.name;
     const value = target.value;
+
     setValues({
       ...values,
       [name]: value

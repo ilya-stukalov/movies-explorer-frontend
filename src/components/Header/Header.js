@@ -2,7 +2,7 @@ import React from 'react';
 import Logo from './../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
 
-function Header({width}) {
+function Header({ width,   loggedIn }) {
 
   return (
     <header className="header">
@@ -12,6 +12,7 @@ function Header({width}) {
         <div
           className="header__container">
           <Navigation
+            loggedIn={loggedIn}
             width={width}/>
         </div>
     </header>

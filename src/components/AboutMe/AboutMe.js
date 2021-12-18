@@ -26,7 +26,8 @@ function AboutMe(props) {
         <a
           className="about-me__gh-link"
           href="https://github.com/ilya-stukalov"
-          target="_blank">
+          target="_blank"
+          rel="noreferrer">
           Github
         </a>
         <p className="about-me__list-name">Портфолио</p>
@@ -34,21 +35,24 @@ function AboutMe(props) {
           <li className="about-me__list-item"><p className="about-me__list-item-text">Статичный сайт</p>
             <a
               href="https://github.com/ilya-stukalov/how-to-learn"
-              target="_blank">
+              target="_blank"
+              rel="noreferrer">
               <img className="about-me__list-item-img" alt="Иконка ссылки" src={linkIcon}/>
             </a>
           </li>
           <li className="about-me__list-item"><p className="about-me__list-item-text">Адаптивный сайт</p>
             <a
               href="https://github.com/ilya-stukalov/russian-travel"
-              target="_blank">
+              target="_blank"
+              rel="noreferrer">
               <img className="about-me__list-item-img" alt="Иконка ссылки" src={linkIcon}/>
             </a>
           </li>
           <li className="about-me__list-item"><p className="about-me__list-item-text">Одностороннее приложение</p>
             <a
               href="https://github.com/ilya-stukalov/react-mesto-api-full"
-              target="_blank">
+              target="_blank"
+              rel="noreferrer">
               <img className="about-me__list-item-img" alt="Иконка ссылки" src={linkIcon}/>
             </a>
           </li>

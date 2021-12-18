@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom';
 import MenuLabel from '../../images/menu-label.svg';
 import Popup from '../Popup/Popup';
 
-function Navigation({width}) {
+function Navigation({ width, loggedIn }) {
 
   const [isPopupOpen, setIsPopupOpen] = React.useState(false);
 
@@ -20,9 +20,19 @@ function Navigation({width}) {
 
   return (
     <nav className="navigation">
-      {width <= 768 &&
+
+
+
+
+
+
+
+
+
+
+      { loggedIn && width <= 768 &&
         (<>
-          <Route exact path={['/movies', '/saved-movies', '/profile']}>
+          <Route exact path={['/', '/movies', '/saved-movies', '/profile']}>
             <img
               alt="Иконка меню"
               className="navigation__menu-label"
@@ -34,25 +44,23 @@ function Navigation({width}) {
               onClose={closePopup}
             />
           </Route>
-
-          <Route exact path={['/']}>
-            <UsersMenu />
-          </Route>
-
         </>) }
 
-      { width > 768 &&
+      { loggedIn && width > 768 &&
         (<>
-          <Route exact path={['/movies', '/saved-movies', '/profile']}>
+          <Route exact path={['/', '/movies', '/saved-movies', '/profile']}>
             <FilmsMenu
             />
           </Route>
-
-          <Route exact path={['/']}>
-            <UsersMenu />
-          </Route>
         </>)
       }
+
+      { !loggedIn &&
+      (<Route exact path={['/']}>
+        <UsersMenu />
+      </Route>)
+      }
+
     </nav>
   )
 }

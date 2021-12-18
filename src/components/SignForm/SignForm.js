@@ -1,32 +1,43 @@
 import React from 'react';
 
-function SignForm(props) {
+function SignForm({noValidate, handleSubmit, children, login, isDisabled}) {
 
   return (
-    props.login ?
+    login ?
       (
-        <div className="form">
-      <p className="form__text"></p>
-      <fieldset className="form__fieldset">
-        {props.children}
-      </fieldset>
-      <button
-        className="form__submit signin-submit-button">
-        Войти
-      </button>
-    </div>
+        <form
+          noValidate={noValidate}
+          className="form form__container"
+          onSubmit={handleSubmit}>
+          <p className="form__text"></p>
+          <fieldset className="form__fieldset">
+        {children}
+          </fieldset>
+          <button
+            disabled={isDisabled}
+            type="submit"
+            className={isDisabled ? "form__submit signin-submit-button form__submit_inactive" : "form__submit signin-submit-button"}>
+            Войти
+          </button>
+        </form>
       )
       : (
-        <div className="form">
+        <form
+          noValidate={noValidate}
+          className="form form__container"
+          onSubmit={handleSubmit}>
         <p className="form__text"></p>
         <fieldset className="form__fieldset">
-          {props.children}
+          {children}
         </fieldset>
         <button
-          className="form__submit">
+          disabled={isDisabled}
+          type="submit"
+          className={isDisabled ? "form__submit form__submit_inactive" : "form__submit"}
+        >
           Зарегистрироваться
         </button>
-      </div>
+      </form>
       )
   );
 }
